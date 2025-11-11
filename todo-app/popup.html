@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>My Todos</h1>
+
+    <div class="add-todo" id="addTodoSection">
+      <input type="text" id="todoInput" placeholder="Add a new todo...">
+      <button id="addBtn">Add</button>
+    </div>
+
+    <div class="edit-todo" id="editSection" style="display: none;">
+      <input type="text" id="editInput" placeholder="Edit todo...">
+      <div class="edit-buttons">
+        <button id="saveBtn">Save</button>
+        <button id="cancelBtn">Cancel</button>
+      </div>
+    </div>
+
+    <ul id="todoList" class="todo-list"></ul>
+
+    <div class="stats">
+      <span id="todoCount">0 items</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
