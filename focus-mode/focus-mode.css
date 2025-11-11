@@ -1,0 +1,25 @@
+* {
+  display: none !important;
+}
+
+html,
+body,
+*:has(article),
+article,
+article * {
+  display: revert !important;
+}
+
+body {
+  background-color: #cacaca !important;
+}
+
+[role='navigation'] {
+  display: none !important;
+}
+
+article {
+  margin: auto;
+  max-width: 720px;
+  box-shadow: 0 0 4px rgba(26, 26, 26, 0.541);
+}
