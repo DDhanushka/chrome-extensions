@@ -43,8 +43,11 @@ function renderTodos() {
   todos.forEach((todo) => {
     const li = document.createElement('li');
     li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+    li.draggable = true;
+    li.dataset.id = todo.id;
 
     li.innerHTML = `
+      <span class="drag-handle">⋮⋮</span>
       <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id="${todo.id}">
       <label data-id="${todo.id}">${escapeHtml(todo.text)}</label>
       <div class="todo-actions">
@@ -62,6 +65,7 @@ function renderTodos() {
 
   updateCount();
   attachEventListeners();
+  attachDragListeners();
   updateSvgFilters();
 }
 
@@ -97,6 +101,92 @@ function attachEventListeners() {
       deleteTodo(id);
     });
   });
+}
+
+// Drag and drop functionality
+let draggedElement = null;
+let draggedIndex = null;
+
+function attachDragListeners() {
+  const todoItems = document.querySelectorAll('.todo-item');
+
+  todoItems.forEach((item, index) => {
+    item.addEventListener('dragstart', handleDragStart);
+    item.addEventListener('dragover', handleDragOver);
+    item.addEventListener('drop', handleDrop);
+    item.addEventListener('dragenter', handleDragEnter);
+    item.addEventListener('dragleave', handleDragLeave);
+    item.addEventListener('dragend', handleDragEnd);
+  });
+}
+
+function handleDragStart(e) {
+  draggedElement = e.currentTarget;
+  draggedIndex = Array.from(todoList.children).indexOf(draggedElement);
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', e.currentTarget.innerHTML);
+}
+
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  e.dataTransfer.dropEffect = 'move';
+
+  // Add drag-over class while dragging over
+  if (e.currentTarget !== draggedElement) {
+    e.currentTarget.classList.add('drag-over');
+  }
+
+  return false;
+}
+
+function handleDragEnter(e) {
+  e.preventDefault();
+  if (e.currentTarget !== draggedElement) {
+    e.currentTarget.classList.add('drag-over');
+  }
+}
+
+function handleDragLeave(e) {
+  // Only remove if we're actually leaving the todo-item, not just entering a child
+  if (e.currentTarget === e.target) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+}
+
+function handleDrop(e) {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+
+  e.currentTarget.classList.remove('drag-over');
+
+  if (draggedElement !== e.currentTarget) {
+    const dropIndex = Array.from(todoList.children).indexOf(e.currentTarget);
+
+    // Reorder the todos array
+    const draggedTodo = todos[draggedIndex];
+    todos.splice(draggedIndex, 1);
+    todos.splice(dropIndex, 0, draggedTodo);
+
+    saveTodos();
+  }
+
+  return false;
+}
+
+function handleDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+
+  // Remove drag-over class from all items
+  document.querySelectorAll('.todo-item').forEach((item) => {
+    item.classList.remove('drag-over');
+  });
+
+  draggedElement = null;
+  draggedIndex = null;
 }
 
 // Add new todo

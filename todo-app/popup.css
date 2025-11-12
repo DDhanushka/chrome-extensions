@@ -103,6 +103,7 @@ input[type="text"] {
   outline: none;
   transition: border-color 0.3s;
   background-color: var(--text-input-bg);
+  color: var(--text-color);
 }
 
 input[type="text"]:focus {
@@ -151,7 +152,7 @@ button:hover {
 .todo-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 10px 10px 0;
   background: var(--todo-item-bg);
   color: var(--text-color);
   font-weight: 400;
@@ -159,6 +160,38 @@ button:hover {
   border-radius: 5px;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s;
+  cursor: move;
+}
+
+.drag-handle {
+  cursor: grab;
+  padding: 0 8px;
+  margin-right: 5px;
+  color: var(--stats-color);
+  font-size: 18px;
+  line-height: 1;
+  user-select: none;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.todo-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+  cursor: grabbing;
+}
+
+.todo-item.drag-over {
+  border: 2px dashed var(--primary-color);
+  background: var(--text-input-bg);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.todo-item.dragging * {
+  pointer-events: none;
 }
 
 .todo-item input[type="checkbox"] {
