@@ -2,6 +2,37 @@
   --text-input-bg: #EDEDED;
   --primary-color: #F6FF00;
   --text-color: #000;
+  --body-bg: #fff;
+  --todo-item-bg: #fff;
+  --label-color: #333;
+  --completed-label-color: #999;
+  --stats-color: #666;
+  --border-color: #ddd;
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #888;
+  --scrollbar-thumb-hover: #555;
+  --cancel-btn-bg: #fff;
+  --cancel-btn-border: #ccc;
+  --input-focus-border: #c0c0c0;
+  --icon-color: #ff0000;
+}
+
+body.dark-theme {
+  --text-input-bg: #2a2a2a;
+  --text-color: #fff;
+  --body-bg: #1a1a1a;
+  --todo-item-bg: #2a2a2a;
+  --label-color: #e0e0e0;
+  --completed-label-color: #666;
+  --stats-color: #999;
+  --border-color: #444;
+  --scrollbar-track: #2a2a2a;
+  --scrollbar-thumb: #555;
+  --scrollbar-thumb-hover: #777;
+  --cancel-btn-bg: #2a2a2a;
+  --cancel-btn-border: #555;
+  --input-focus-border: #555;
+  --icon-color: #fff;
 }
 
 * {
@@ -15,7 +46,8 @@ body {
   width: 400px;
   min-height: 300px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fff;
+  background: var(--body-bg);
+  transition: background 0.3s ease;
 }
 
 .container {
@@ -74,7 +106,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-  border-color: #c0c0c0;
+  border-color: var(--input-focus-border);
 }
 
 button {
@@ -101,9 +133,9 @@ button:hover {
 }
 
 #cancelBtn {
-  background: #fff;
+  background: var(--cancel-btn-bg);
   color: var(--text-color);
-  border: 1px solid #ccc;
+  border: 1px solid var(--cancel-btn-border);
 }
 
 
@@ -120,7 +152,7 @@ button:hover {
   display: flex;
   align-items: center;
   padding: 10px;
-  background: white;
+  background: var(--todo-item-bg);
   color: var(--text-color);
   font-weight: 400;
   margin-bottom: 10px;
@@ -138,7 +170,7 @@ button:hover {
   cursor: pointer;
   border: 2px solid var(--text-color);
   border-radius: 3px;
-  background-color: #fff;
+  background-color: var(--todo-item-bg);
   position: relative;
   transition: all 0.2s ease;
 }
@@ -154,7 +186,8 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--text-color);
+  color: #000;
+  font-size: 14px;
   font-size: 14px;
   font-weight: bold;
 }
@@ -163,13 +196,13 @@ button:hover {
   flex: 1;
   cursor: pointer;
   font-size: 14px;
-  color: #333;
+  color: var(--label-color);
   word-break: break-word;
 }
 
 .todo-item.completed label {
   text-decoration: line-through;
-  color: #999;
+  color: var(--completed-label-color);
 }
 
 .todo-actions {
@@ -189,26 +222,30 @@ button:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  stroke: var(--icon-color);
+  fill: var(--icon-color);
 }
 
 .icon-btn img {
   transition: filter 0.2s ease;
+  stroke: var(--icon-color);
+  fill: var(--icon-color);
 }
 
 .edit-icon:hover img {
-  filter: brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(187deg) brightness(97%) contrast(92%);
+  filter: brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(187deg) brightness(97%) contrast(92%) !important;
 }
 
 .delete-icon:hover img {
-  filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(4456%) hue-rotate(348deg) brightness(95%) contrast(95%);
+  filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(4456%) hue-rotate(348deg) brightness(95%) contrast(95%) !important;
 }
 
 .stats {
   text-align: center;
   padding: 10px;
-  color: #666;
+  color: var(--stats-color);
   font-size: 14px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--border-color);
   margin: 0 20px;
 }
 
@@ -217,15 +254,15 @@ button:hover {
 }
 
 .todo-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--scrollbar-track);
   border-radius: 10px;
 }
 
 .todo-list::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--scrollbar-thumb);
   border-radius: 10px;
 }
 
 .todo-list::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--scrollbar-thumb-hover);
 }

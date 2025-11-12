@@ -8,6 +8,9 @@ const editInput = document.getElementById('editInput');
 const saveBtn = document.getElementById('saveBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const addTodoSection = document.getElementById('addTodoSection');
+const themeIcon = document.getElementById('theme-icon');
+
+let isDarkMode = false;
 
 let todos = [];
 let editingId = null;
@@ -15,6 +18,7 @@ let editingId = null;
 // Initialize - load todos from storage
 document.addEventListener('DOMContentLoaded', () => {
   loadTodos();
+  loadTheme();
 });
 
 // Load todos from chrome.storage.local
@@ -44,8 +48,12 @@ function renderTodos() {
       <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id="${todo.id}">
       <label data-id="${todo.id}">${escapeHtml(todo.text)}</label>
       <div class="todo-actions">
-        <span class="icon-btn edit-icon" data-id="${todo.id}"><img src="svg/edit-3.svg" alt="add Icon" width="18" height="18" style="margin-right: 5px;" /></span>
-        <span class="icon-btn delete-icon" data-id="${todo.id}"><img src="svg/trash-2.svg" alt="delete Icon" width="18" height="18" /></span>
+        <span class="icon-btn edit-icon" data-id="${todo.id}">
+          <img src="svg/edit-3.svg" alt="add Icon" width="18" height="18" style="margin-right: 5px;" class="todo-svg" />
+        </span>
+        <span class="icon-btn delete-icon" data-id="${todo.id}">
+          <img src="svg/trash-2.svg" alt="delete Icon" width="18" height="18" class="todo-svg" />
+        </span>
       </div>
     `;
 
@@ -54,6 +62,7 @@ function renderTodos() {
 
   updateCount();
   attachEventListeners();
+  updateSvgFilters();
 }
 
 // Update todo count
@@ -183,3 +192,49 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 }
+
+// Theme Toggle Functions
+function loadTheme() {
+  chrome.storage.local.get(['theme'], (result) => {
+    const theme = result.theme || 'light';
+    applyTheme(theme);
+  });
+}
+
+function updateSvgFilters() {
+  const filterValue = isDarkMode ? 'invert(1)' : 'invert(0)';
+
+  // Update theme icon
+  themeIcon.style.filter = filterValue;
+
+  // Update all todo SVG icons
+  document.querySelectorAll('.todo-svg').forEach((img) => {
+    img.style.filter = filterValue;
+  });
+}
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeIcon.src = 'svg/sun.svg';
+    isDarkMode = true;
+  } else {
+    document.body.classList.remove('dark-theme');
+    themeIcon.src = 'svg/moon.svg';
+    isDarkMode = false;
+  }
+
+  updateSvgFilters();
+}
+
+function toggleTheme() {
+  const isDark = document.body.classList.contains('dark-theme');
+  const newTheme = isDark ? 'light' : 'dark';
+
+  chrome.storage.local.set({ theme: newTheme }, () => {
+    applyTheme(newTheme);
+  });
+}
+
+// Theme icon click event
+themeIcon.addEventListener('click', toggleTheme);
