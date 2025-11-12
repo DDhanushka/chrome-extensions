@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Todo App",
+  "name": "Jot - Todo List",
   "version": "1.0",
-  "description": "A simple todo list chrome extension",
+  "description": "See a task? Jot it. Finish a task? Jot it. Stop losing ideas between tabs and keep your digital life organized with the simplest to-do list on the web.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Todo App"
+    "default_title": "Jot - Todo List"
   },
   "permissions": [
     "storage"
