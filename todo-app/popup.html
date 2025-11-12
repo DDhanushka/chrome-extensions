@@ -6,26 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo App</title>
   <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
   <div class="container">
-    <h1>My Todos</h1>
+    <!-- header -->
+    <div class="header-section">
+      <div class="title">
+        <img src="images/icon-48.png" alt="Todo App Icon" width="48" height="48">
+        <h1>Done in a click.</h1>
+      </div>
+      <!-- svg icon load from directory -->
+      <img src="svg/moon.svg" alt="Menu Icon" width="24" height="24" id="theme-icon">
+    </div>
 
     <div class="add-todo" id="addTodoSection">
       <input type="text" id="todoInput" placeholder="Add a new todo...">
-      <button id="addBtn">Add</button>
+      <button id="addBtn">
+        <img src="svg/plus.svg" alt="add Icon" width="21" height="21">
+        Add
+      </button>
     </div>
 
-    <div class="edit-todo" id="editSection" style="display: none;">
-      <input type="text" id="editInput" placeholder="Edit todo...">
+    <div class="add-todo" id="editSection" style="display: none ;">
+      <input type="text" class="todoInput" id="editInput" placeholder="Edit todo...">
       <div class="edit-buttons">
-        <button id="saveBtn">Save</button>
-        <button id="cancelBtn">Cancel</button>
+        <button id="saveBtn">
+          <img src="svg/save.svg" alt="add Icon" width="21" height="21" style="margin-right: 5px;" />
+          Save
+        </button>
+        <button id="cancelBtn">
+          <img src="svg/x.svg" alt="add Icon" width="21" height="21" />
+        </button>
       </div>
     </div>
 
-    <ul id="todoList" class="todo-list"></ul>
+    <ul id="todoList" class="todo-list"> </ul>
 
     <div class="stats">
       <span id="todoCount">0 items</span>

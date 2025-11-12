@@ -44,8 +44,8 @@ function renderTodos() {
       <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id="${todo.id}">
       <label data-id="${todo.id}">${escapeHtml(todo.text)}</label>
       <div class="todo-actions">
-        <span class="edit-icon" data-id="${todo.id}">Edit</span>
-        <span class="delete-icon" data-id="${todo.id}">Delete</span>
+        <span class="icon-btn edit-icon" data-id="${todo.id}"><img src="svg/edit-3.svg" alt="add Icon" width="18" height="18" style="margin-right: 5px;" /></span>
+        <span class="icon-btn delete-icon" data-id="${todo.id}"><img src="svg/trash-2.svg" alt="delete Icon" width="18" height="18" /></span>
       </div>
     `;
 
@@ -58,8 +58,9 @@ function renderTodos() {
 
 // Update todo count
 function updateCount() {
-  const count = todos.length;
-  todoCount.textContent = `${count} ${count === 1 ? 'item' : 'items'}`;
+  const totalCount = todos.length;
+  const completedCount = todos.filter(t => t.completed).length;
+  todoCount.textContent = `${completedCount}/${totalCount} ${totalCount === 1 ? 'task' : 'tasks'} ${completedCount === totalCount && totalCount > 0 ? 'are done 😃' : completedCount > 0 ? 'done' : ''}`;
 }
 
 // Attach event listeners to dynamically created elements
@@ -75,7 +76,7 @@ function attachEventListeners() {
   // Edit button
   document.querySelectorAll('.edit-icon').forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      const id = parseInt(e.target.dataset.id);
+      const id = parseInt(e.currentTarget.dataset.id);
       startEdit(id);
     });
   });
@@ -83,7 +84,7 @@ function attachEventListeners() {
   // Delete button
   document.querySelectorAll('.delete-icon').forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      const id = parseInt(e.target.dataset.id);
+      const id = parseInt(e.currentTarget.dataset.id);
       deleteTodo(id);
     });
   });
@@ -130,7 +131,7 @@ function startEdit(id) {
   if (todo) {
     editingId = id;
     editInput.value = todo.text;
-    editSection.style.display = 'block';
+    editSection.style.display = 'flex';
     addTodoSection.style.display = 'none'
     editInput.focus();
   }
