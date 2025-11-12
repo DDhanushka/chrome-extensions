@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Jot - Todo List",
   "version": "1.0",
-  "description": "See a task? Jot it. Finish a task? Jot it. Stop losing ideas between tabs and keep your digital life organized with the simplest to-do list on the web.",
+  "description": "Your minimalist to-do list for the web. Jot down tasks in a click and clear your mind between tabs.",
   "action": {
     "default_popup": "popup.html",
     "default_title": "Jot - Todo List"

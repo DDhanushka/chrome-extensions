@@ -21,17 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
   loadTheme();
 });
 
-// Load todos from chrome.storage.local
+// Load todos from chrome.storage.sync
 function loadTodos() {
-  chrome.storage.local.get(['todos'], (result) => {
+  chrome.storage.sync.get(['todos'], (result) => {
     todos = result.todos || [];
     renderTodos();
   });
 }
 
-// Save todos to chrome.storage.local
+// Save todos to chrome.storage.sync
 function saveTodos() {
-  chrome.storage.local.set({ todos: todos }, () => {
+  chrome.storage.sync.set({ todos: todos }, () => {
     renderTodos();
   });
 }
